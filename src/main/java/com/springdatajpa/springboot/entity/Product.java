@@ -16,7 +16,6 @@ import java.time.LocalDateTime;
 @ToString
 @Table(
         name = "products",
-        schema = "testdb1",
         uniqueConstraints = {
                 @UniqueConstraint(
                         name = "sku_unique",
@@ -39,7 +38,7 @@ public class Product {
     private String name;
 
     @Column(name = "stock_keeping_unit", nullable = false)
-    private String sku;
+    private Integer sku;
     private String description;
     private BigDecimal price;
     private Boolean active;
@@ -67,11 +66,11 @@ public class Product {
         this.name = name;
     }
 
-    public String getSku() {
+    public Integer getSku() {
         return sku;
     }
 
-    public void setSku(String sku) {
+    public void setSku(Integer sku) {
         this.sku = sku;
     }
 

@@ -6,6 +6,7 @@ import com.springdatajpa.springboot.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -63,6 +64,34 @@ public class ProductResource {
 
         productRepository.deleteById(id);
 
+    }
+
+    //Get active Products
+    @GetMapping(value = "/active")
+    public List<Product> findActive(){
+
+        return productRepository.findByActiveTrue();
+
+    }
+
+    @GetMapping(value = "/{one}/{two}")
+    public List<Product> findBetween(@PathVariable("one") BigDecimal one, @PathVariable("two") BigDecimal two){
+        return productRepository.findByPriceBetween(one,two);
+    }
+
+    @GetMapping(value = "/active/{one}/{two}")
+    public List<Product> findBetweenActive(@PathVariable("one") BigDecimal one, @PathVariable("two") BigDecimal two){
+        return productRepository.findByPriceBetweenAndActiveTrue(one, two);
+    }
+
+    @GetMapping(value = "/sku")
+    public List<Product> findSku(){
+        return productRepository.findBySkuNotOrderByIdDesc(0);
+    }
+
+    @GetMapping(value = "/sku/active")
+    public List<Product> findSkuActive(){
+        return productRepository.findBySkuNotAndActiveTrue(0);
     }
 
 
