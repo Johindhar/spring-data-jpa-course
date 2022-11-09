@@ -7,6 +7,10 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -49,6 +53,29 @@ public class Product {
 
     @UpdateTimestamp
     private LocalDateTime lastUpdated;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "addToWishlist")
+    List<User> usersWishlisted = new LinkedList<>();
+
+
+    @OneToMany(mappedBy = "product")
+    List<Cart> cartUser = new LinkedList<>();
+
+    public List<Cart> getCartUser() {
+        return cartUser;
+    }
+
+    public void setCartUser(List<Cart> cartUser) {
+        this.cartUser = cartUser;
+    }
+
+    public List<User> getUsersWishlisted() {
+        return usersWishlisted;
+    }
+
+    public void setUsersWishlisted(List<User> usersWishlisted) {
+        this.usersWishlisted = usersWishlisted;
+    }
 
     public Long getId() {
         return id;
